@@ -68,56 +68,33 @@ def tinyMazeSearch(problem):
   return  [s,s,w,s,w,w,s,w]
 
 def depthFirstSearch(problem):
-  """
-  Search the deepest nodes in the search tree first [p 85].
-  
-  Your search algorithm needs to return a list of actions that reaches
-  the goal.  Make sure to implement a graph search algorithm [Fig. 3.7].
-  
-  To get started, you might want to try some of these simple commands to
-  understand the search problem that is being passed in:
-  
-  print "Start:", problem.getStartState()
-  print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-  print "Start's successors:", problem.getSuccessors(problem.getStartState())
-  util.raiseNotDefined()
-  """
-  "*** YOUR CODE HERE ***"
   explorado = set();
   borda = util.Stack();
   borda.push((problem.getStartState(),[]));
   while not borda.isEmpty():
     nodo, move = borda.pop();
-
-    if problem.isGoalState(nodo):   
+    if problem.isGoalState(nodo):
       return move;
     if nodo in explorado:
       continue;
-
     explorado.add(nodo);
     for successor, acao, custo in problem.getSuccessors(nodo):
       borda.push((successor, move+[acao]));
   return [];
 
 def breadthFirstSearch(problem):
-  "Search the shallowest nodes in the search tree first. [p 81]"
-  "util.raiseNotDefined()"
-  "*** YOUR CODE HERE ***"
   explorado = set();
   borda = util.Queue();
   borda.push((problem.getStartState(),[]));
-
   while not borda.isEmpty():
     nodo, move = borda.pop();
-
-  if problem.isGoalState(nodo):
-    return move;
-  if nodo in explorado:
-    continue;
-
-  explorado.add(nodo);
-  for successor, acao, custo in problem.getSuccessors(nodo):
-    borda.push((successor, move + [acao]));
+    if problem.isGoalState(nodo):
+		  return move;
+    if nodo in explorado:
+		  continue;
+    explorado.add(nodo);
+    for successor, acao, custo in problem.getSuccessors(nodo):
+      borda.push((successor, move + [acao]));
   return [];
       
 def uniformCostSearch(problem):
