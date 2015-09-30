@@ -80,14 +80,45 @@ def depthFirstSearch(problem):
   print "Start:", problem.getStartState()
   print "Is the start a goal?", problem.isGoalState(problem.getStartState())
   print "Start's successors:", problem.getSuccessors(problem.getStartState())
+  util.raiseNotDefined()
   """
   "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+  explorado = set();
+  borda = util.Stack();
+  borda.push((problem.getStartState(),[]));
+  while not borda.isEmpty():
+    nodo, move = borda.pop();
+
+    if problem.isGoalState(nodo):   
+      return move;
+    if nodo in explorado:
+      continue;
+
+    explorado.add(nodo);
+    for successor, acao, custo in problem.getSuccessors(nodo):
+      borda.push((successor, move+[acao]));
+  return [];
 
 def breadthFirstSearch(problem):
   "Search the shallowest nodes in the search tree first. [p 81]"
+  "util.raiseNotDefined()"
   "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+  explorado = set();
+  borda = util.Queue();
+  borda.push((problem.getStartState(),[]));
+
+  while not borda.isEmpty():
+    nodo, move = borda.pop();
+
+  if problem.isGoalState(nodo):
+    return move;
+  if nodo in explorado:
+    continue;
+
+  explorado.add(nodo);
+  for successor, acao, custo in problem.getSuccessors(nodo):
+    borda.push((successor, move + [acao]));
+  return [];
       
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
