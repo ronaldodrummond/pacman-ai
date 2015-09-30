@@ -58,49 +58,70 @@ class SearchProblem:
            
 
 def tinyMazeSearch(problem):
-  """
-  Returns a sequence of moves that solves tinyMaze.  For any other
-  maze, the sequence of moves will be incorrect, so only use this for tinyMaze
-  """
-  from game import Directions
-  s = Directions.SOUTH
-  w = Directions.WEST
-  return  [s,s,w,s,w,w,s,w]
+    """
+    Returns a sequence of moves that solves tinyMaze.  For any other
+    maze, the sequence of moves will be incorrect, so only use this for tinyMaze
+    """
+    from game import Directions
+    s = Directions.SOUTH
+    w = Directions.WEST
+    return  [s,s,w,s,w,w,s,w]
 
 def depthFirstSearch(problem):
-  explorado = set();
-  borda = util.Stack();
-  borda.push((problem.getStartState(),[]));
-  while not borda.isEmpty():
-    nodo, move = borda.pop();
-    if problem.isGoalState(nodo):
-      return move;
-    if nodo in explorado:
-      continue;
-    explorado.add(nodo);
-    for successor, acao, custo in problem.getSuccessors(nodo):
-      borda.push((successor, move+[acao]));
-  return [];
+    explorado = set();
+    borda = util.Stack();
+    borda.push((problem.getStartState(),[]));
+    while not borda.isEmpty():
+        nodo, move = borda.pop();
+        
+        if problem.isGoalState(nodo):
+            return move;
+        if nodo in explorado:
+            continue;
+            
+        explorado.add(nodo);
+        
+        for successor, acao, custo in problem.getSuccessors(nodo):
+            borda.push((successor, move+[acao]));
+    return [];
 
 def breadthFirstSearch(problem):
-  explorado = set();
-  borda = util.Queue();
-  borda.push((problem.getStartState(),[]));
-  while not borda.isEmpty():
-    nodo, move = borda.pop();
-    if problem.isGoalState(nodo):
-		  return move;
-    if nodo in explorado:
-		  continue;
-    explorado.add(nodo);
-    for successor, acao, custo in problem.getSuccessors(nodo):
-      borda.push((successor, move + [acao]));
-  return [];
+    explorado = set();
+    borda = util.Queue();
+    borda.push((problem.getStartState(),[]));
+    while not borda.isEmpty():
+        nodo, move = borda.pop();
+        
+        if problem.isGoalState(nodo):
+		          return move;
+        if nodo in explorado:
+		          continue;
+            
+        explorado.add(nodo);
+        
+        for successor, acao, custo in problem.getSuccessors(nodo):
+            borda.push((successor, move + [acao]));
+    return [];
       
 def uniformCostSearch(problem):
-  "Search the node of least total cost first. "
-  "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+    explorado = set();
+    borda = util.PriorityQueue();
+    borda.push( (problem.getStartState(), []),0);
+    
+    while not borda.isEmpty():
+        nodo, move = borda.pop();
+        
+        if problem.isGoalState(nodo):
+            return move;
+        if nodo in explorado:
+            continue;
+            
+        explorado.add(nodo);
+        
+        for successor, acao, custo in problem.getSuccessors(nodo):
+            borda.push((successor, move + [acao]), problem.getCostOfActions(move + [acao]));
+
+    return [];
 
 def nullHeuristic(state, problem=None):
   """
