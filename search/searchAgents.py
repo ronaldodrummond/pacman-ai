@@ -437,6 +437,14 @@ def foodHeuristic(state, problem):
   """
   position, foodGrid = state
   "*** YOUR CODE HERE ***"
+  h = foodGrid.height
+  w = foodGrid.width
+  ct = 0
+  for x in range(w):
+      for y in range(h):
+          if foodGrid[x][y]:
+              ct = max(ct, abs(x-position[0]) + abs(y-position[1]))
+  return ct
   return 0
   
 class ClosestDotSearchAgent(SearchAgent):

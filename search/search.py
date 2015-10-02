@@ -130,11 +130,28 @@ def nullHeuristic(state, problem=None):
   """
   return 0
 
+# def aStarSearch(problem, heuristic=nullHeuristic):
+#   "Search the node that has the lowest combined cost and heuristic first."
+#   "*** YOUR CODE HERE ***"
+#   util.raiseNotDefined()
 def aStarSearch(problem, heuristic=nullHeuristic):
-  "Search the node that has the lowest combined cost and heuristic first."
-  "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
-    
+    explorado = set();
+    borda = util.PriorityQueue();
+    borda.push((problem.getStartState(),[]), heuristic(problem.getStartState(), problem));
+    while not borda.isEmpty():
+        nodo, move = borda.pop();
+        
+        if problem.isGoalState(nodo):
+              return move;
+        if nodo in explorado:
+              continue;
+            
+        explorado.add(nodo);
+        
+        for successor, acao, custo in problem.getSuccessors(nodo):
+            soma = problem.getCostOfActions(move + [acao]) + heuristic(successor,problem);
+            borda.push((successor, move + [acao]), soma);
+    return [];    
   
 # Abbreviations
 bfs = breadthFirstSearch
